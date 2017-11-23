@@ -1,8 +1,3 @@
-import folium
-import json
-import os
-import pandas as pd
-import pyhdb
 
 class DoctorVisits:
   def __init__(self, db_conn):
