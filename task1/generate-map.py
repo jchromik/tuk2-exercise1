@@ -4,23 +4,24 @@ import os
 import pandas as pd
 import pyhdb
 
-import doctorvisits
-import patients
+from task1.patients import Patients
 
 with open("../db-conf.json") as db_conf_file:
   db_conf = json.load(db_conf_file)
+
+#pdb.set_trace()
 
 connection = pyhdb.connect(
   host=db_conf["host"],
   port=db_conf["port"],
   user=db_conf["user"],
-  password=db_conf["password"]
+  password=db_conf["password"],
 )
 
 # gen = doctorvisits.DoctorVisits(connection)
 # data = gen.generate()
 
-gen = patients.Patients(connection)
+gen = Patients(connection)
 data = gen.generate()
 
 connection.close()
