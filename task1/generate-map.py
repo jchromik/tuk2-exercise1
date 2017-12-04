@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import pyhdb
 
-from task1.patients import Patients
+from patients import Patients
 
 with open("../db-conf.json") as db_conf_file:
   db_conf = json.load(db_conf_file)

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import json
 import pyhdb
 import numpy as np
-from task2.diseases import Diseases
+from diseases import Diseases
 
 with open("../db-conf.json") as db_conf_file:
     db_conf = json.load(db_conf_file)
