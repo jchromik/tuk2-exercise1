@@ -1,0 +1,11 @@
+  ;DiagnosisDescription                ;DiagnosisDescription                ;Occurrence
+1 ;Benign essential hypertension       ;Mixed hyperlipidemia                ;324       
+2 ;Mixed hyperlipidemia                ;Unspecified essential hypertension  ;181       
+3 ;Other and unspecified hyperlipidemia;Unspecified essential hypertension  ;141       
+4 ;Esophageal reflux                   ;Mixed hyperlipidemia                ;139       
+5 ;Lumbago                             ;Mixed hyperlipidemia                ;124       
+6 ;Acute bronchitis                    ;Cough                               ;121       
+7 ;Essential hypertension              ;Mixed hyperlipidemia                ;120       
+8 ;Benign essential hypertension       ;Other and unspecified hyperlipidemia;110       
+9 ;Acute sinusitis, unspecified        ;Cough                               ;108       
+10;Esophageal reflux                   ;Unspecified essential hypertension  ;107       
