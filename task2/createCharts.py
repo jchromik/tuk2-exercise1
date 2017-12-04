@@ -19,23 +19,26 @@ connection = pyhdb.connect(
 gen = Diseases(connection)
 data = gen.generate()
 
-age = []
-occurences = []
+yearofbirth = {}
+occurences = {}
 
 for x in range(0, len(data)):
-    occurences.append((data[x][1]))
-    age.append(data[x][2])
+    icd9code = data[x][0]
+    if icd9code not in yearofbirth:
+        yearofbirth[icd9code] = []
+    if icd9code not in occurences:
+        occurences[icd9code] = []
+    occurences[icd9code].append((data[x][2]))
+    yearofbirth[icd9code].append(data[x][1])
 
-age = np.array(age)
-occurences = np.array(occurences)
+plt.title('10 most common diseases by ICD9-Code')
+plt.xlabel('Year of Birth')
+plt.ylabel('Number of Patients')
 
-plt.title('10 most common diseases')
-plt.xlabel('age')
-plt.ylabel('patients')
-plt.plot(age, occurences, 'g-', label=data[0][0])
-leg = plt.legend(loc='right')
-
-#plt.xticks(x, diseases)
-#plt.axis([0, 10, 0, 100])
+for icd9code in yearofbirth.keys():
+    yearofbirth[icd9code] = np.array(yearofbirth[icd9code])
+    occurences[icd9code] = np.array(occurences[icd9code])
+    plt.plot(yearofbirth[icd9code], occurences[icd9code], label="ICD9: " + icd9code)
+    plt.legend(loc='upper right')
 
 plt.show()
