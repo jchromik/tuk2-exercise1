@@ -30,5 +30,4 @@ class Visits:
                 """)
 
         visits = cursor.fetchall()
-        #visits = list(map(lambda tuple: (tuple[0], float(tuple[1])), visits))
         return visits
