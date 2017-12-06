@@ -25,9 +25,12 @@ def main():
 
     for i in range(0, 20):
         diagnoses_ranged = [diagnosis for diagnosis in diagnoses_all if code_to_range(diagnosis[2]) == i]
-        print(count_cooccurrences(diagnoses_ranged))
+        cooccurrences = count_cooccurrences(diagnoses_ranged).items()
+        cooccurrences = sorted(cooccurrences, key=lambda x:x[1], reverse=True)
+        if cooccurrences:
+            print(cooccurrences[0])
 
-    # TODO: go on here and return most often cooccurrences
+    # TODO: make this pretty
 
 def count_cooccurrences(diagnoses):
     cooccurrences = defaultdict(int)
