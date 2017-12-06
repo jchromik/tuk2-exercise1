@@ -1,37 +1,43 @@
-import argparse
 import numpy as np
-import pandas as pd
-import csv
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import log_loss
-from sklearn.metrics import mean_squared_error
-from sklearn.linear_model import LinearRegression
-from sklearn import preprocessing
 from scipy import interpolate
-from math import sqrt
+
 
 class Interpolator:
 
     def interpolate(ages, numberOfVisits):
-        averageAges = [x+4 for x in ages]
-        averageVisits = [x/10 for x in numberOfVisits]
+        averageAges = [x+4 for x in ages]                   #the average person in group 10-19 is 14
+        averageVisits = [x/10 for x in numberOfVisits]      #there are 10 ages in an age group
 
+        f = interpolate.Akima1DInterpolator(averageAges, averageVisits)    #best mse
         #f = interpolate.interp1d(averageAges, averageVisits)
-        f = interpolate.interp1d(averageAges, averageVisits)
-        allAges = np.arange(24, 95, 1) #values are between 24 and 94
+        #f = interpolate.KroghInterpolator(averageAges, averageVisits)
+        #f = interpolate.PchipInterpolator(averageAges, averageVisits)
+        #f = interpolate.CubicSpline(averageAges, averageVisits)
+
+        allAges = np.arange(15, 91, 1)    #values are from 15 to 90
+
         interpolatedVisits = f(allAges)
 
-        plt.plot(averageAges, averageVisits, 'ro', allAges, interpolatedVisits, 'y-')
+        plt.title('Interpolated doctor visits per age')
+        plt.xlabel('age')
+        plt.ylabel('number of visits')
+        plt.plot(averageAges, averageVisits, 'ro', label = 'average patient in age group')
+        plt.plot(allAges, interpolatedVisits, 'b-', label = 'interpolated data')
+        plt.legend(loc='lower center')
         plt.show()
         return interpolatedVisits
 
 
     def mean_squared_error(interpolatedData, actualData):
-        allAges = np.arange(24, 95, 1)  # values are between 24 and 94
-        print(actualData)
-        print(interpolatedData)
-        plt.plot(allAges, actualData, 'r-', allAges, interpolatedData, 'y-')
+        allAges = np.arange(15, 91, 1)    #values are from 15 to 90
+
+        plt.title('Interpolated vs real doctor visits per age')
+        plt.xlabel('age')
+        plt.ylabel('number of visits')
+        plt.plot(allAges, actualData, 'ro', label = 'real data')
+        plt.plot(allAges, interpolatedData, 'b-', label = 'interpolated data')
+        plt.legend(loc='lower center')
         plt.show()
         mse = np.mean((actualData - interpolatedData) ** 2)
         return mse
