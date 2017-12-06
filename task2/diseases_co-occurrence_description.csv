@@ -1,11 +1,11 @@
-  ;DiagnosisDescription                ;DiagnosisDescription                ;Occurrence
-1 ;Benign essential hypertension       ;Mixed hyperlipidemia                ;324       
-2 ;Mixed hyperlipidemia                ;Unspecified essential hypertension  ;181       
-3 ;Other and unspecified hyperlipidemia;Unspecified essential hypertension  ;141       
-4 ;Esophageal reflux                   ;Mixed hyperlipidemia                ;139       
-5 ;Lumbago                             ;Mixed hyperlipidemia                ;124       
-6 ;Acute bronchitis                    ;Cough                               ;121       
-7 ;Essential hypertension              ;Mixed hyperlipidemia                ;120       
-8 ;Benign essential hypertension       ;Other and unspecified hyperlipidemia;110       
-9 ;Acute sinusitis, unspecified        ;Cough                               ;108       
-10;Esophageal reflux                   ;Unspecified essential hypertension  ;107       
+  ;DiagnosisDescription                ;DiagnosisDescription              ;Occurrence
+1 ;Benign essential hypertension       ;Mixed hyperlipidemia              ;77        
+2 ;Other and unspecified hyperlipidemia;Unspecified essential hypertension;63        
+3 ;Acute sinusitis, unspecified        ;Cough                             ;57        
+4 ;Acute bronchitis                    ;Cough                             ;52        
+5 ;Mixed hyperlipidemia                ;Unspecified essential hypertension;46        
+6 ;Allergic rhinitis, cause unspecified;Unspecified essential hypertension;43        
+7 ;Esophageal reflux                   ;Unspecified essential hypertension;43        
+8 ;Acute bronchitis                    ;Acute sinusitis, unspecified      ;38        
+9 ;Unspecified essential hypertension  ;Unspecified hypothyroidism        ;36        
+10;Esophageal reflux                   ;Mixed hyperlipidemia              ;33        
