@@ -1,6 +1,7 @@
+from collections import defaultdict
+
 import json
 import pyhdb
-import re
 
 def main():
     with open("../db-conf.json") as db_conf_file:
@@ -21,28 +22,27 @@ def main():
         """)
 
     diagnoses_all = cursor.fetchall()
-    diagnoses_ranged = []
 
-    for i in range(0,20):
-        diagnoses_ranged.append(list(filter(
-            lambda tuple: code_to_range(tuple[2]) == i, diagnoses_all)))
+    for i in range(0, 20):
+        diagnoses_ranged = [diagnosis for diagnosis in diagnoses_all if code_to_range(diagnosis[2]) == i]
+        print(count_cooccurrences(diagnoses_ranged))
 
-    # diagnoses_ranged has the following format:
-    # [   list_with_range_0_diagnoses,
-    #     list_with_range_1_diagnoses,
-    #     ...,
-    #     list_with_range_19_diagnses ]
-    # see: https://en.wikipedia.org/wiki/List_of_ICD-9_codes for named ranges
+    # TODO: go on here and return most often cooccurrences
 
-    # TODO: go on here and count co-occurrences
+def count_cooccurrences(diagnoses):
+    cooccurrences = defaultdict(int)
+    for pair in ((d1[2],d2[2]) for d1 in diagnoses for d2 in diagnoses if d1[0] == d2[0] and d1[1] == d2[1] and d1[2] < d2[2]):
+        cooccurrences[pair] += 1
+    return cooccurrences
+
 
 def code_to_prefix(icd9code):
     if "." in icd9code:
         return icd9code.split(".")[0]
-    else:
-        return icd9code
+    return icd9code
 
 def prefix_to_range(icd9prefix):
+    # see: https://en.wikipedia.org/wiki/List_of_ICD-9_codes for named ranges
     if "E" in icd9prefix.upper():
         return 18
     if "V" in icd9prefix.upper():
@@ -52,7 +52,7 @@ def prefix_to_range(icd9prefix):
         760, 780, 800]
     try: 
         numeric_prefix = int(icd9prefix)
-    except:
+    except ValueError:
         return 0
     for i in range(0,len(range_starts)):
         if range_starts[i] > numeric_prefix:
