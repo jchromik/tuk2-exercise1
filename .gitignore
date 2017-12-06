@@ -1,4 +1,4 @@
 db-conf.json
 *.pyc
 
-task1/map.html
+task1/*.html
