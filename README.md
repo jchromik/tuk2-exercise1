@@ -1,4 +1,3 @@
-
 # TuK2 Winter Term 2017 / 2018: Exercise 1
 
 ## Task 1
@@ -12,15 +11,15 @@
 > - Average BMI (body mass index)
 > - Smoker status
 > - ...
-> - Filterable by year and gender 
+> - Filterable by year and gender
 
 To make it run do the following:
 
 1. `cp db-conf.sample.json db-conf.json`
-2. Change password in `db-conf.json`
-3. Change directory: `cd task1`
-4. Run `python generate-map.py`
-5. Have a look at the beautiful `map.html`
+1. Change password in `db-conf.json`
+1. Change directory: `cd task1`
+1. Run `python3 generate-map.py [GENDER] [START_YEAR] [END_YEAR]` (`GENDER` is `M` or `F`)
+1. Have a look at the beautiful `.html` maps
 
 Enjoy :-)
 
@@ -48,7 +47,46 @@ The SQL queries can be found in `diseases_co-occurrence_icd9.sql` (diseased refe
 
 > Determine the two most common diseases per ICD-9 code range ([https://en.wikipedia.org/wiki/List_of_ICD-9_codes](https://en.wikipedia.org/wiki/List_of_ICD-9_codes)) that appear together
 
-TODO: How does this differ from step 2?
+Call with `python3 cooccurrence_per_code_range.py` from `task2` directory.
+
+Result:
+
+```shell
+001–139: infectious and parasitic diseases
+    110.1 and 110.4 appearing together 2 times.
+140–239: neoplasms
+    216.9 and 238.2 appearing together 1 times.
+240–279: endocrine, nutritional and metabolic diseases, and immunity disorders
+    268.9 and 272.2 appearing together 29 times.
+280–289: diseases of the blood and blood-forming organs
+    280 and 281.1 appearing together 4 times.
+290–319: mental disorders
+    300.02 and 305.90 appearing together 20 times.
+320–389: diseases of the nervous system and sense organs
+    380.10 and 380.4 appearing together 8 times.
+390–459: diseases of the circulatory system
+    401.9 and 427.31 appearing together 9 times.
+460–519: diseases of the respiratory system
+    461.9 and 466.0 appearing together 38 times.
+520–579: diseases of the digestive system
+    530.81 and 553.3 appearing together 6 times.
+580–629: diseases of the genitourinary system
+    626.0 and 626.4 appearing together 6 times.
+630–679: complications of pregnancy, childbirth, and the puerperium
+    642.33 and 643.03 appearing together 1 times.
+680–709: diseases of the skin and subcutaneous tissue
+    690.10 and 691.8 appearing together 5 times.
+710–739: diseases of the musculoskeletal system and connective tissue
+    723.1 and 724.2 appearing together 23 times.
+780–799: symptoms, signs, and ill-defined conditions
+    786.05 and 786.07 appearing together 16 times.
+800–999: injury and poisoning
+    825.0 and 928.20 appearing together 12 times.
+E: external causes of injury
+    E884 and E884.9 appearing together 2 times.
+V: supplemental classification
+    V04.81 and V70.0 appearing together 31 times.
+```
 
 ## Task 3
 

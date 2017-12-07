@@ -1,5 +1,6 @@
 import json
 
+import where_clause_builder
 
 class Patients:
     def __init__(self, db_conn):
@@ -8,13 +9,15 @@ class Patients:
         self.legend_name = "#Patients / #Inhabitants in Percent"
         self.title = "Percentage of Patients per State"
 
-    def generate(self):
+    def generate(self, gender=None, start_year=None, end_year=None):
         cursor = self.db_conn.cursor()
         cursor.execute("""
-    SELECT "State", COUNT("State")
-    FROM "TUKGRP7"."Patient"
-    GROUP BY "State"
-    """)
+            SELECT P."State", COUNT(P."State")
+            FROM
+                "TUKGRP7"."Patient" AS P INNER JOIN "TUKGRP7"."Transcript" AS T
+                ON P."PatientGuid" = T."PatientGuid" """ + 
+            where_clause_builder.build(gender, start_year, end_year) + 
+            "GROUP BY P.\"State\"")
         patients = cursor.fetchall()
         with open("resources/states.json") as states_data_file:
             states_data = json.load(states_data_file)

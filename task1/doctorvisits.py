@@ -1,5 +1,7 @@
 import pyhdb
 
+import where_clause_builder
+
 class DoctorVisits:
 
     VISIT_VIEW_PREFIX = """
@@ -26,7 +28,7 @@ class DoctorVisits:
         self.legend_name = "Average Visits"
         self.title = "Doctor Visits per State"
 
-    def generate(self, gender=None):
+    def generate(self, gender=None, start_year=None, end_year=None):
         cursor = self.db_conn.cursor()
         try:
             cursor.execute("""DROP VIEW "TUKGRP7"."Visits";""")
@@ -35,7 +37,7 @@ class DoctorVisits:
 
         cursor.execute(
             DoctorVisits.VISIT_VIEW_PREFIX +
-            self.where_clause('M', 2000, 2012) +
+            where_clause_builder.build(gender, start_year, end_year) +
             DoctorVisits.VISIT_VIEW_SUFFIX)
 
         cursor.execute(DoctorVisits.SELECT_STATEMENT)
@@ -43,14 +45,3 @@ class DoctorVisits:
         visits = cursor.fetchall()
         visits = list(map(lambda tuple: (tuple[0], float(tuple[1])), visits))
         return visits
-
-    def where_clause(self, gender=None, year_start=None, year_end=None):
-        result = "WHERE 1 = 1"
-        if gender:
-            result += " AND P.\"Gender\" LIKE '" + gender + "'"
-        if year_start:
-            result += " AND T.\"VisitYear\" >= " + str(year_start)
-        if year_end:
-            result += " AND T.\"VisitYear\" <= " + str(year_end)
-        return result + "\n"
-            
