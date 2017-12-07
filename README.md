@@ -23,7 +23,7 @@ To make it run do the following:
 
 Enjoy :-)
 
-TODO: Complete task
+Note: We do not generate maps showing information about smoking status because we can not quantify this with the given data. There are too many factors to be considered to map this on a linear range. The database does not provide an order or smoking status and the NIST codes do not help, unfortunately.
 
 ## Task 2
 

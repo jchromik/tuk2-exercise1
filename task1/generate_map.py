@@ -8,8 +8,9 @@ import folium
 import pandas as pd
 import pyhdb
 
-from patients import Patients
+from bmi import BMI
 from doctorvisits import DoctorVisits
+from patients import Patients
 
 STATE_GEO = os.path.join('.', 'resources/us-states.json')
 
@@ -25,10 +26,12 @@ def main():
         password=db_conf["password"],
     )
 
-    for class_var in [DoctorVisits, Patients]:
-        gender = sys.argv[1] if len(sys.argv) > 1 else None
-        start_year = sys.argv[2] if len(sys.argv) > 2 else None
-        end_year = sys.argv[3] if len(sys.argv) > 3 else None
+    gender = sys.argv[1] if len(sys.argv) > 1 else None
+    start_year = sys.argv[2] if len(sys.argv) > 2 else None
+    end_year = sys.argv[3] if len(sys.argv) > 3 else None
+
+    for class_var in [BMI, DoctorVisits, Patients]:
+        print("Generating map: " + class_var.__name__)
         generate_map(class_var, connection, gender, start_year, end_year)
 
     connection.close()
@@ -46,7 +49,7 @@ def generate_map(class_var, db_conn, gender, start_year, end_year):
         data=state_data,
         columns=['State', gen.column_name],
         key_on='feature.id',
-        fill_color='YlGn',
+        fill_color='OrRd',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=gen.legend_name)
