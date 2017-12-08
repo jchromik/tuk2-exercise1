@@ -180,7 +180,7 @@ V: supplemental classification
     V04.81 and V70.0 appearing together 31 times.
 ```
 
-Queries by:
+Queried by:
 
 ```sql
 SELECT "PatientGuid", "StartYear", "ICD9Code"
