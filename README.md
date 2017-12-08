@@ -89,7 +89,33 @@ Unfortunately we can not generate maps showing information about smoking status 
 
 > Determine the most common diseases and their distributions among age groups (line chart for 10 most common diagnoses)
 
-This is done by `most-common-diseases.py`. Run `python3 most-common-diseases.py`.
+This is done by `most-common-diseases.py`. Run `python3 most-common-diseases.py` to generate the following chart:
+
+![10 most common diseases](submission/10-most-common-diseases.png)
+
+This is done by the following query:
+
+```sql
+DROP VIEW "TUKGRP7"."Top10Diseases";
+
+CREATE VIEW "Top10Diseases" AS (
+    SELECT "ICD9Code", COUNT("DiagnosisGuid") AS "Occurences"
+    FROM "TUKGRP7"."Diagnosis"
+    GROUP BY "ICD9Code"
+    ORDER BY "Occurences" DESC
+    LIMIT 10);
+
+SELECT
+    D."ICD9Code",
+    P."YearOfBirth",
+    COUNT(D."PatientGuid") AS "Occurences"
+FROM
+    "TUKGRP7"."Diagnosis" AS D INNER JOIN "TUKGRP7"."Patient" AS P
+    ON D."PatientGuid" = P."PatientGuid"
+WHERE "ICD9Code" IN (SELECT "ICD9Code" FROM "TUKGRP7"."Top10Diseases")
+GROUP BY D."ICD9Code", P."YearOfBirth"
+ORDER BY D."ICD9Code", P."YearOfBirth" ASC;
+```
 
 ### Step 2
 
@@ -100,6 +126,72 @@ This is done by `most-common-diseases.py`. Run `python3 most-common-diseases.py`
 > - Read about ICD-9 codes (you may want to group diseases)
 
 The SQL queries can be found in `diseases_co-occurrence_icd9.sql` (diseased referenced by ICD9 code) and `diseases_co-occurrence_description.sql` (diseased referenced by description). These files also contain the runtime of the queries as a comment. Results are to be found in the corresponding CSV files.
+
+Query by ICD9 code:
+
+```sql
+SELECT D1."ICD9Code", D2."ICD9Code", COUNT(*) AS "Occurrence"
+FROM
+    "TUKGRP7"."Diagnosis" AS D1 INNER JOIN "TUKGRP7"."Diagnosis" AS D2
+    ON  D1."PatientGuid" = D2."PatientGuid"
+    AND D1."StartYear" = D2."StartYear"
+    AND D1."StartYear" != 0
+    AND D1."ICD9Code" < D2."ICD9Code"
+GROUP BY D1."ICD9Code", D2."ICD9Code"
+ORDER BY "Occurrence" DESC
+LIMIT 10
+
+/* server processing time: 73 ms 943 µs */
+```
+
+Result:
+
+```
+  ;ICD9Code;ICD9Code;Occurrence
+1 ;272.2   ;401.1   ;77        
+2 ;272.4   ;401.9   ;63        
+3 ;461.9   ;786.2   ;57        
+4 ;466.0   ;786.2   ;52        
+5 ;272.2   ;401.9   ;46        
+6 ;401.9   ;477.9   ;43        
+7 ;401.9   ;530.81  ;43        
+8 ;461.9   ;466.0   ;38        
+9 ;244.9   ;401.9   ;36        
+10;272.2   ;530.81  ;33        
+```
+
+Query by description:
+
+```sql
+SELECT D1."DiagnosisDescription", D2."DiagnosisDescription", COUNT(*) AS "Occurrence"
+FROM
+    "TUKGRP7"."Diagnosis" AS D1 INNER JOIN "TUKGRP7"."Diagnosis" AS D2
+    ON  D1."PatientGuid" = D2."PatientGuid"
+    AND D1."StartYear" = D2."StartYear"
+    AND D1."StartYear" != 0
+    AND D1."DiagnosisDescription" < D2."DiagnosisDescription"
+GROUP BY D1."DiagnosisDescription", D2."DiagnosisDescription"
+ORDER BY "Occurrence" DESC
+LIMIT 10
+
+/* server processing time: 89 ms 845 µs */
+```
+
+Result:
+
+```
+  ;DiagnosisDescription                ;DiagnosisDescription              ;Occurrence
+1 ;Benign essential hypertension       ;Mixed hyperlipidemia              ;77        
+2 ;Other and unspecified hyperlipidemia;Unspecified essential hypertension;63        
+3 ;Acute sinusitis, unspecified        ;Cough                             ;57        
+4 ;Acute bronchitis                    ;Cough                             ;52        
+5 ;Mixed hyperlipidemia                ;Unspecified essential hypertension;46        
+6 ;Allergic rhinitis, cause unspecified;Unspecified essential hypertension;43        
+7 ;Esophageal reflux                   ;Unspecified essential hypertension;43        
+8 ;Acute bronchitis                    ;Acute sinusitis, unspecified      ;38        
+9 ;Unspecified essential hypertension  ;Unspecified hypothyroidism        ;36        
+10;Esophageal reflux                   ;Mixed hyperlipidemia              ;33  
+```
 
 ### Step 3
 
@@ -145,6 +237,16 @@ E: external causes of injury
 V: supplemental classification
     V04.81 and V70.0 appearing together 31 times.
 ```
+
+Queries by:
+
+```sql
+SELECT "PatientGuid", "StartYear", "ICD9Code"
+FROM "TUKGRP7"."Diagnosis"
+WHERE "StartYear" != 0;
+```
+
+With python post-processing applied on the query result.
 
 ## Task 3
 
