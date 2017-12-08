@@ -289,6 +289,7 @@ The data is accessed with following query and postprocessed in python:
 ![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
 - the average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
+
 ![alt text](task3/plots/interpolatedDoctorVisits.png)
 
 - comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 112950 and the Root Mean Squared Error about 336:
