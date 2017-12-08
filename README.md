@@ -260,7 +260,7 @@ With python post-processing applied on the query result.
 
 Run "python createCharts.py" with Python 3 to create following plots:
 
-First part:
+### Step 1
 - total doctor visits of different age groups:
 
 The data is accessed with following query and postprocessed in python:
@@ -296,7 +296,7 @@ The data is accessed with following query and postprocessed in python:
 
 ![alt text](task3/plots/interpolatedVsRealDoctorVisits.png)
 
-Second part:
+### Step 2
 
 We used 90% of the data to train and 10% to test our model for both Diastolic and Systolic Blood Pressure. The plots show the whole testing data or only 100 data points to have a more detailed look.
 The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic Blood Pressure  0.021655668377:
