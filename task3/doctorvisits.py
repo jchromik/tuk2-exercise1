@@ -18,7 +18,7 @@ class Visits:
     SELECT "YearOfBirth", Sum("Visits")
     FROM "Visits", "Patient"
     WHERE "Visits"."PatientGuid" = "Patient"."PatientGuid"
-    GROUP BY "YearOfBirth", "Visits"
+    GROUP BY "YearOfBirth"
             """)
 
         cursor.execute("""
@@ -28,7 +28,6 @@ class Visits:
     WHERE "Transcript"."VisitYear" != 0
     GROUP BY "Transcript"."VisitYear" - "Patient"."YearOfBirth"
     ORDER BY "Transcript"."VisitYear" - "Patient"."YearOfBirth" ASC
-    
                 """)
 
         visits = cursor.fetchall()

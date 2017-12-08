@@ -265,6 +265,30 @@ First part:
 The average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
 ![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
+The data is accessed with following query and postprocessed in python:
+
+```sql
+    DROP VIEW "TUKGRP7"."Visits";
+
+    CREATE VIEW "Visits" AS (
+    SELECT "PatientGuid", COUNT("TranscriptGuid") AS "Visits"
+    FROM "Transcript"
+    GROUP BY "PatientGuid");
+
+    SELECT "YearOfBirth", Sum("Visits")
+    FROM "Visits", "Patient"
+    WHERE "Visits"."PatientGuid" = "Patient"."PatientGuid"
+    GROUP BY "YearOfBirth";
+
+    SELECT "Transcript"."VisitYear" - "Patient"."YearOfBirth" as "age", COUNT("Transcript"."PatientGuid") as "doctorVisits"
+    FROM "Patient"
+    INNER JOIN "Transcript" ON "Patient"."PatientGuid"="Transcript"."PatientGuid"
+    WHERE "Transcript"."VisitYear" != 0
+    GROUP BY "Transcript"."VisitYear" - "Patient"."YearOfBirth"
+    ORDER BY "Transcript"."VisitYear" - "Patient"."YearOfBirth" ASC
+```
+
+
 - through those data get the interpolated doctor visits per age
 ![alt text](task3/plots/interpolatedDoctorVisits.png)
 
@@ -277,6 +301,19 @@ Second part:
 We used 90% of the data to train and 10% to test our model for both Diastolic and Systolic Blood Pressure. The plots show the whole testing data or only 100 data points to have a more detailed look.
 The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic Blood Pressure  0.021655668377:
 
+We used this query to access the data for Smoking Status, BMI ,Age and Blood Pressures:
+
+```sql
+    SELECT "SmokeCode", "BMI" , "Age", "SystolicBP", "DiastolicBP"
+    FROM
+    (SELECT "SmokeCode","Transcript"."BMI" , "Transcript"."VisitYear" - "Birthday" AS "Age", "Transcript"."SystolicBP", "Transcript"."DiastolicBP", "Transcript"."VisitYear", "SmokingYear"
+    FROM (SELECT "Patient"."PatientGuid" AS "ID", "Patient"."YearOfBirth" AS "Birthday", "PatientSmokingStatus"."EffectiveYear" AS "SmokingYear", "SmokingStatus"."NISTcode" AS "SmokeCode"
+    FROM "Patient"
+    INNER JOIN "PatientSmokingStatus" ON "Patient"."PatientGuid"="PatientSmokingStatus"."PatientGuid"
+    INNER JOIN "SmokingStatus" ON "PatientSmokingStatus"."SmokingStatusGuid"="SmokingStatus"."SmokingStatusGuid")
+    INNER JOIN "Transcript" ON "ID"="Transcript"."PatientGuid")
+    WHERE "VisitYear" = "SmokingYear" AND "SystolicBP" != 0 AND "DiastolicBP" != 0
+```
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 20% of the whole data set):
@@ -296,6 +333,18 @@ Plots for diastolic blood pressure:
 
 
 By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Temperature data of patients the achieved R^2 for Systolic Blood Pressure raised to 0.0437444633807, for Diastolic Blood Pressure to 0.0525840805308. This coefficient of determination is still quite low, but makes totally sense because there are way more factors that can influence the blood pressure of a patient. The model averages its predictions around a healthy blood pressure of about 120 to 80. This means we can’t predict exact blood pressures with the given data:
+
+```sql
+    SELECT "SmokeCode", "BMI" , "Age", "Height", "Weight", "RespiratoryRate", "HeartRate", "Temperature", "SystolicBP", "DiastolicBP"
+    FROM
+    (SELECT "SmokeCode","Transcript"."BMI" , "Transcript"."VisitYear" - "Birthday" AS "Age", "Transcript"."Height", "Transcript"."Weight", "Transcript"."RespiratoryRate", "Transcript"."HeartRate", "Transcript"."Temperature", "Transcript"."SystolicBP", "Transcript"."DiastolicBP", "Transcript"."VisitYear", "SmokingYear"
+    FROM (SELECT "Patient"."PatientGuid" AS "ID", "Patient"."YearOfBirth" AS "Birthday", "PatientSmokingStatus"."EffectiveYear" AS "SmokingYear", "SmokingStatus"."NISTcode" AS "SmokeCode"
+    FROM "Patient"
+    INNER JOIN "PatientSmokingStatus" ON "Patient"."PatientGuid"="PatientSmokingStatus"."PatientGuid"
+    INNER JOIN "SmokingStatus" ON "PatientSmokingStatus"."SmokingStatusGuid"="SmokingStatus"."SmokingStatusGuid")
+    INNER JOIN "Transcript" ON "ID"="Transcript"."PatientGuid")
+    WHERE "VisitYear" = "SmokingYear" AND "SystolicBP" != 0 AND "DiastolicBP" != 0
+```
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 20% of the whole data set):
