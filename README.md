@@ -106,9 +106,10 @@ The average age for e.g. the age group 0 - 9 is four years and those people will
 ![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
 - through those data get the interpolated doctor visits per age
-![alt text](task3l/plots/interpolatedDoctorVisits.png)
+![alt text](task3/plots/interpolatedDoctorVisits.png)
 
 - comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 112950 and the Root Mean Squared Error about 336:
+
 ![alt text](task3/plots/interpolatedVsRealDoctorVisits.png)
 
 Second part:
@@ -119,13 +120,17 @@ The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic 
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 20% of the whole data set):
+
 ![alt text](task3/plots/PredictedVsRealBPSystolic.png)
 
 - a zoomed in plot with only 100 data points:
+
 ![alt text](task3/plots/PredictedVsRealBPSystolicSmall.png)
 
 Plots for diastolic blood pressure:
+
 ![alt text](task3/plots/PredictedVsRealBPDiastolic.png)
+
 
 ![alt text](task3/plots/PredictedVsRealBPDiastolicSmall.png)
 
@@ -134,13 +139,17 @@ By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Tempe
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 20% of the whole data set):
+
 ![alt text](task3/plots/PredictedVsRealBPSystolicExtra.png)
 
 - a zoomed in plot with only 100 data points:
+
 ![alt text](task3/plots/PredictedVsRealBPSystolicSmallExtra.png)
 
 Plots for diastolic blood pressure:
+
 ![alt text](task3/plots/PredictedVsRealBPDiastolicExtra.png)
 
-![](task3/plots/PredictedVsRealBPDiastolicSmallExtra.png)
+
+![alt text](task3/plots/PredictedVsRealBPDiastolicSmallExtra.png)
 
