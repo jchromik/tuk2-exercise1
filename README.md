@@ -103,13 +103,13 @@ Run "python createCharts.py" with Python 3 to create following plots:
 First part:
 - total doctor visits of different age groups:
 The average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
-![alt text](task3l/plots/doctorVisitsPerAgeGroup.png)
+![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
 - through those data get the interpolated doctor visits per age
 ![alt text](task3l/plots/interpolatedDoctorVisits.png)
 
 - comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 112950 and the Root Mean Squared Error about 336:
-![alt text](task3l/plots/interpolatedVsRealDoctorVisits.png)
+![alt text](task3/plots/interpolatedVsRealDoctorVisits.png)
 
 Second part:
 
@@ -119,28 +119,28 @@ The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic 
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 20% of the whole data set):
-![alt text](task3l/plots/PredictedVsRealBPSystolic.png)
+![alt text](task3/plots/PredictedVsRealBPSystolic.png)
 
 - a zoomed in plot with only 100 data points:
-![alt text](task3l/plots/PredictedVsRealBPSystolicSmall.png)
+![alt text](task3/plots/PredictedVsRealBPSystolicSmall.png)
 
 Plots for diastolic blood pressure:
-![alt text](task3l/plots/PredictedVsRealBPDiastolic.png)
+![alt text](task3/plots/PredictedVsRealBPDiastolic.png)
 
-![alt text](task3l/plots/PredictedVsRealBPDiastolicSmall.png)
+![alt text](task3/plots/PredictedVsRealBPDiastolicSmall.png)
 
 
 By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Temperature data of patients the achieved R^2 for Systolic Blood Pressure raised to 0.0437444633807, for Diastolic Blood Pressure to 0.0525840805308. This coefficient of determination is still quite low, but makes totally sense because there are way more factors that can influence the blood pressure of a patient. The model averages its predictions around a healthy blood pressure of about 120 to 80. This means we can’t predict exact blood pressures with the given data:
 
 Plots for systolic blood pressure:
 - a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 20% of the whole data set):
-![alt text](task3l/plots/PredictedVsRealBPSystolicExtra.png)
+![alt text](task3/plots/PredictedVsRealBPSystolicExtra.png)
 
 - a zoomed in plot with only 100 data points:
-![alt text](task3l/plots/PredictedVsRealBPSystolicSmallExtra.png)
+![alt text](task3/plots/PredictedVsRealBPSystolicSmallExtra.png)
 
 Plots for diastolic blood pressure:
-![alt text](task3l/plots/PredictedVsRealBPDiastolicExtra.png)
+![alt text](task3/plots/PredictedVsRealBPDiastolicExtra.png)
 
-![alt text](task3l/plots/PredictedVsRealBPDiastolicSmallExtra.png)
+![](task3/plots/PredictedVsRealBPDiastolicSmallExtra.png)
 
