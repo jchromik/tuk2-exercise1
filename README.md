@@ -98,4 +98,20 @@ V: supplemental classification
 > - Use the explanatory variables: smoking status, BMI, age (, and ...)
 > - Determine the coefficient of determination R 2 for your regression.
 
-TODO
+Run "python createCharts.py" with Python 3 to create following plots:
+
+First part:
+- total doctor visits of different age groups
+- through those data get the interpolated doctor visits per age
+- comparance of the interpolated and the real values
+- (additionally print out the mean squared error and root mean squared error)
+
+Second part:
+
+For systolic and diastolic blood pressure each:
+- a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 20% of the whole data set)
+- a zoomed in plot with only 100 data points
+- a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 20% of the whole data set)
+- a zoomed in plot with only 100 data points
+
+-(additionally print out the coefficients of determination R2 for all four predictions)
