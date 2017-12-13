@@ -260,8 +260,11 @@ With python post-processing applied on the query result.
 
 Run "python createCharts.py" with Python 3 to create following plots:
 
-### Step 1
+First part:
 - total doctor visits of different age groups:
+The average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. It's different for the first (only data for patients 15-19 years) and the last (only 90 year old patients) age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
+
+![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
 The data is accessed with following query and postprocessed in python:
 
@@ -286,17 +289,15 @@ The data is accessed with following query and postprocessed in python:
     ORDER BY "Transcript"."VisitYear" - "Patient"."YearOfBirth" ASC
 ```
 
-![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
-- the average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
-
+- through that data get the interpolated doctor visits per age
 ![alt text](task3/plots/interpolatedDoctorVisits.png)
 
-- comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 112950 and the Root Mean Squared Error about 336:
+- comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 15157 and the Root Mean Squared Error about 123:
 
 ![alt text](task3/plots/interpolatedVsRealDoctorVisits.png)
 
-### Step 2
+Second part:
 
 We used 90% of the data to train and 10% to test our model for both Diastolic and Systolic Blood Pressure. The plots show the whole testing data or only 100 data points to have a more detailed look.
 The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic Blood Pressure  0.021655668377:

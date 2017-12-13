@@ -33,7 +33,7 @@ def interpolation_task():
         visits = 0
 
         for x in range(0, len(data)):
-            if (startYear < data[x][0] < endYear):
+            if (startYear <= data[x][0] <= endYear):
                 visits = visits + data[x][1]
 
         tup1 = (ageGroup, startYear, visits)
@@ -56,7 +56,6 @@ def interpolation_task():
     numberOfVisits = np.array(numberOfVisits)
 
     ind = np.arange(9)  # the x locations for the groups
-    width = 0.45       # the width of the bars
 
     plt.title('doctor visits per age groups')
     plt.xlabel('age groups')
