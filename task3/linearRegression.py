@@ -105,7 +105,7 @@ class LinearRegressor:
         systolicBP_data = []      #systolic blood pressure
         diastolicBP_data = []     #diastolic blood pressure
         for idx in range (0, len(data)):
-            tuple = (data[idx][0], data[idx][1], data[idx][2], data[idx][3], data[idx][4], data[idx][5], data[idx][6],
+            tuple = (data[idx][0], data[idx][1], data[idx][2], data[idx][3], data[idx][5], data[idx][6],
                      data[idx][7])
             other_data.append(tuple)
             systolicBP_data.append(data[idx][8])

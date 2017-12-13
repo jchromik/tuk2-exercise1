@@ -261,8 +261,7 @@ With python post-processing applied on the query result.
 Run "python createCharts.py" with Python 3 to create following plots:
 
 First part:
-- total doctor visits of different age groups:
-The average age for e.g. the age group 0 - 9 is four years and those people will visit doctors in average 1/10 of the total number of visits of that age group. It's different for the first (only data for patients 15-19 years) and the last (only 90 year old patients) age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
+Total doctor visits of different age groups:
 
 ![alt text](task3/plots/doctorVisitsPerAgeGroup.png)
 
@@ -289,18 +288,24 @@ The data is accessed with following query and postprocessed in python:
     ORDER BY "Transcript"."VisitYear" - "Patient"."YearOfBirth" ASC
 ```
 
+The average age for e.g. the age group 20 - 29 is 24 years and those people will visit doctors in average 1/10 of the total number of visits of that age group. It's different for the first (only data for patients 15-19 years) and the last (only 90 year old patients) age group. Those average patients are marked with a red dot. Their data gets interpolated to show visits per age:
 
-- through that data get the interpolated doctor visits per age
 ![alt text](task3/plots/interpolatedDoctorVisits.png)
 
-- comparance of the interpolated and the real values: The data gets compared to the actual data: The achieved Mean Squared Error is about 15157 and the Root Mean Squared Error about 123:
+For the interpolation we used the SciPy library and got the best results with its "CubicSpline" method. This interpolation technique
+creates splines in form of cubic functions between each of two neighbouring points. To get a smooth transition between two splines the 1st and 2nd
+derivation have to be identical at the joins of those splines.
+
+The data gets compared to the actual data: 
 
 ![alt text](task3/plots/interpolatedVsRealDoctorVisits.png)
+
+The achieved Mean Squared Error is about 13808.5 and the Root Mean Squared Error about 117.5.
 
 Second part:
 
 We used 90% of the data to train and 10% to test our model for both Diastolic and Systolic Blood Pressure. The plots show the whole testing data or only 100 data points to have a more detailed look.
-The achieved R^2 for Systolic Blood Pressure was 0.0282854713335, for Diastolic Blood Pressure  0.021655668377:
+The achieved R^2 for Systolic Blood Pressure was 0.028, for Diastolic Blood Pressure  0.021:
 
 We used this query to access the data for Smoking Status, BMI ,Age and Blood Pressures:
 
@@ -317,7 +322,7 @@ We used this query to access the data for Smoking Status, BMI ,Age and Blood Pre
 ```
 
 Plots for systolic blood pressure:
-- a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 20% of the whole data set):
+- a comparance of predicted blood pressure data (through Smoking Status, BMI and Age) and the actual data (for 10% of the whole data set):
 
 ![alt text](task3/plots/PredictedVsRealBPSystolic.png)
 
@@ -333,7 +338,7 @@ Plots for diastolic blood pressure:
 ![alt text](task3/plots/PredictedVsRealBPDiastolicSmall.png)
 
 
-By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Temperature data of patients the achieved R^2 for Systolic Blood Pressure raised to 0.0437444633807, for Diastolic Blood Pressure to 0.0525840805308. This coefficient of determination is still quite low, but makes totally sense because there are way more factors that can influence the blood pressure of a patient. The model averages its predictions around a healthy blood pressure of about 120 to 80. This means we can’t predict exact blood pressures with the given data:
+By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Temperature data of patients the achieved R^2 for Systolic Blood Pressure raised to 0.043, for Diastolic Blood Pressure to 0.052. This coefficient of determination is still quite low, but makes totally sense because there are way more factors that can influence the blood pressure of a patient. The model averages its predictions around a healthy blood pressure of about 120 to 80. This means we can’t predict exact blood pressures with the given data:
 
 ```sql
     SELECT "SmokeCode", "BMI" , "Age", "Height", "Weight", "RespiratoryRate", "HeartRate", "Temperature", "SystolicBP", "DiastolicBP"
@@ -348,7 +353,7 @@ By additionally using the Height, Weight, Respiratory Rate, Heart Rate and Tempe
 ```
 
 Plots for systolic blood pressure:
-- a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 20% of the whole data set):
+- a comparance of predicted blood pressure data (through Smoking Status, BMI, Age, Height, Weight, Respiratory Rate, Heart Rate and Temperature) and the actual data (for 10% of the whole data set):
 
 ![alt text](task3/plots/PredictedVsRealBPSystolicExtra.png)
 
@@ -363,3 +368,12 @@ Plots for diastolic blood pressure:
 
 ![alt text](task3/plots/PredictedVsRealBPDiastolicSmallExtra.png)
 
+So how are the different variables influencing the solution: 
+- Smoking Status influence is quite small --> weird codes
+- BMI influence is quite small --> BMI is a bad indicator in general (e.g. body builders)
+- Age has as expected a big influence (0.014 / 0.040)
+- Height influence is small as expected
+- Weight has as expected a big influence (0.037 / 0.038)
+- Respiratory Rate influence is quite small
+- Heart Rate would probably be a good indicator, but is always 0 in the data set
+- Temperature influence is quite small
